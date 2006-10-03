@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MathUtils.cs" />
+    <Compile Include="MeshUtils.cs" />
     <Compile Include="Matrix3DStack.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
