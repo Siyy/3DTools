@@ -13,12 +13,19 @@
 //---------------------------------------------------------------------------
 
 using System;
+using System.Windows;
+using System.Data;
+using System.Xml;
+using System.Configuration;
 
-namespace _3DTools
+namespace Channel9Demo
 {
-    public enum ViewMode
+    /// <summary>
+    /// Interaction logic for App.xaml
+    /// </summary>
+
+    public partial class App : System.Windows.Application
     {
-        Solid,
-        Wireframe
+
     }
 }

@@ -12,10 +12,10 @@
   
 -->
 
-<Application x:Class="ModelViewer.MyApp"
+<Application x:Class="Channel9Demo.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Startup="OnStartup"
+    StartupUri="DemoWindow.xaml"
     >
     <Application.Resources>
          

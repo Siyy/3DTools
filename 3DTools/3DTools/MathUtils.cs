@@ -1,8 +1,8 @@
 //---------------------------------------------------------------------------
 //
 // (c) Copyright Microsoft Corporation.
-// This source is subject to the Microsoft Permissive License.
-// See http://www.microsoft.com/resources/sharedsource/licensingbasics/permissivelicense.mspx
+// This source is subject to the Microsoft Limited Permissive License.
+// See http://www.microsoft.com/resources/sharedsource/licensingbasics/limitedpermissivelicense.mspx
 // All other rights reserved.
 //
 // This file is part of the 3D Tools for Windows Presentation Foundation
@@ -200,6 +200,29 @@ namespace _3DTools
         public static Matrix3D TryWorldToViewportTransform(Viewport3DVisual visual, out bool success)
         {
             success = false;
+            Matrix3D result = TryWorldToCameraTransform(visual, out success);
+
+            if (success)
+            {
+                result.Append(GetProjectionMatrix(visual.Camera, MathUtils.GetAspectRatio(visual.Viewport.Size)));
+                result.Append(GetHomogeneousToViewportTransform(visual.Viewport));
+                success = true;
+            }
+
+            return result;
+        }
+
+
+        /// <summary>
+        ///     Computes the transform from world space to camera space
+        /// 
+        ///     This method can fail if Camera.Transform is non-invertable
+        ///     in which case the camera clip planes will be coincident and
+        ///     nothing will render.  In this case success will be false.
+        /// </summary>
+        public static Matrix3D TryWorldToCameraTransform(Viewport3DVisual visual, out bool success)
+        {
+            success = false;
             Matrix3D result = Matrix3D.Identity;
 
             Camera camera = visual.Camera;
@@ -232,31 +255,20 @@ namespace _3DTools
             }
 
             result.Append(GetViewMatrix(camera));
-            result.Append(GetProjectionMatrix(camera, MathUtils.GetAspectRatio(viewport.Size)));
-            result.Append(GetHomogeneousToViewportTransform(viewport));
 
             success = true;
             return result;
         }
 
         /// <summary>
-        ///     Computes the transform from the inner space of the given
-        ///     Visual3D to the 2D space of the Viewport3DVisual which
-        ///     contains it.
-        /// 
-        ///     The result will contain the transform of the given visual.
-        /// 
-        ///     This method can fail if Camera.Transform is non-invertable
-        ///     in which case the camera clip planes will be coincident and
-        ///     nothing will render.  In this case success will be false.
+        /// Gets the object space to world space transformation for the given DependencyObject
         /// </summary>
-        /// <param name="visual"></param>
-        /// <param name="success"></param>
-        /// <returns></returns>
-        public static Matrix3D TryTransformTo2DAncestor(DependencyObject visual, out Viewport3DVisual viewport, out bool success)
+        /// <param name="visual">The visual whose world space transform should be found</param>
+        /// <param name="viewport">The Viewport3DVisual the Visual is contained within</param>
+        /// <returns>The world space transformation</returns>
+        private static Matrix3D GetWorldTransformationMatrix(DependencyObject visual, out Viewport3DVisual viewport)
         {
-            success = false;
-            Matrix3D to2D = Matrix3D.Identity;
+            Matrix3D worldTransform = Matrix3D.Identity;
             viewport = null;
 
             if (!(visual is Visual3D))
@@ -271,11 +283,11 @@ namespace _3DTools
                     break;
                 }
 
-                Transform3D transform = (Transform3D) visual.GetValue(ModelVisual3D.TransformProperty);
+                Transform3D transform = (Transform3D)visual.GetValue(ModelVisual3D.TransformProperty);
 
                 if (transform != null)
                 {
-                    to2D.Append(transform.Value);
+                    worldTransform.Append(transform.Value);
                 }
 
                 visual = VisualTreeHelper.GetParent(visual);
@@ -298,7 +310,26 @@ namespace _3DTools
                 return ZeroMatrix;
             }
 
-            success = true;
+            return worldTransform;
+        }
+
+        /// <summary>
+        ///     Computes the transform from the inner space of the given
+        ///     Visual3D to the 2D space of the Viewport3DVisual which
+        ///     contains it.
+        /// 
+        ///     The result will contain the transform of the given visual.
+        /// 
+        ///     This method can fail if Camera.Transform is non-invertable
+        ///     in which case the camera clip planes will be coincident and
+        ///     nothing will render.  In this case success will be false.
+        /// </summary>
+        /// <param name="visual"></param>
+        /// <param name="success"></param>
+        /// <returns></returns>
+        public static Matrix3D TryTransformTo2DAncestor(DependencyObject visual, out Viewport3DVisual viewport, out bool success)
+        {
+            Matrix3D to2D = GetWorldTransformationMatrix(visual, out viewport);
             to2D.Append(MathUtils.TryWorldToViewportTransform(viewport, out success));
 
             if (!success)
@@ -307,6 +338,33 @@ namespace _3DTools
             }
 
             return to2D;
+        }
+
+
+        /// <summary>
+        ///     Computes the transform from the inner space of the given
+        ///     Visual3D to the camera coordinate space
+        /// 
+        ///     The result will contain the transform of the given visual.
+        /// 
+        ///     This method can fail if Camera.Transform is non-invertable
+        ///     in which case the camera clip planes will be coincident and
+        ///     nothing will render.  In this case success will be false.
+        /// </summary>
+        /// <param name="visual"></param>
+        /// <param name="success"></param>
+        /// <returns></returns>
+        public static Matrix3D TryTransformToCameraSpace(DependencyObject visual, out Viewport3DVisual viewport, out bool success)
+        {
+            Matrix3D toViewSpace = GetWorldTransformationMatrix(visual, out viewport);
+            toViewSpace.Append(MathUtils.TryWorldToCameraTransform(viewport, out success));
+
+            if (!success)
+            {
+                return ZeroMatrix;
+            }
+
+            return toViewSpace;
         }
 
         /// <summary>

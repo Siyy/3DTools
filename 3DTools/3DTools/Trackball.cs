@@ -1,8 +1,8 @@
 //---------------------------------------------------------------------------
 //
 // (c) Copyright Microsoft Corporation.
-// This source is subject to the Microsoft Permissive License.
-// See http://www.microsoft.com/resources/sharedsource/licensingbasics/permissivelicense.mspx
+// This source is subject to the Microsoft Limited Permissive License.
+// See http://www.microsoft.com/resources/sharedsource/licensingbasics/limitedpermissivelicense.mspx
 // All other rights reserved.
 //
 // This file is part of the 3D Tools for Windows Presentation Foundation
@@ -61,7 +61,7 @@ namespace _3DTools
     /// 
     ///           You may also use a Transform3DGroup to combine the
     ///           Transform property with additional Transforms.
-    /// </summary>
+    /// </summary> 
     public class Trackball
     {
         private FrameworkElement _eventSource;
