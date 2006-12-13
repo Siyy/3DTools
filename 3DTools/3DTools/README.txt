@@ -165,15 +165,11 @@ happens with the closest point on the object with capture to the mouse.
 Known Issues:
 -------------
 •	Inking support:  
-Inking is possible with the 2D on 3D code, but it requires a small modification to 
-Interactive3DDecorator.cs to enable this behavior.  Simply uncomment the commented out 
-“InvalidateArrange” call in OnPreviewMouseMove and inking will fully work.  Because the 
-InvalidateArrange could potentially be computationally costly, it is commented out by default, 
-but should you need inking support in your application, the above step will enable it 
-by taking the previously described action.  
-
-The Channel9Demo included in the Samples directory, for instance, makes use of inking, 
-and requires this change to run correctly.
+Inking is possible with the 2D on 3D code, but it requires you to set the ContainsInk 
+dependency property on Interactive3DDecorator to true.  This then causes an InvalidateArrange
+to occur whenever the mouse is moved. Because the InvalidateArrange could potentially be 
+computationally costly, this property is set to false by default.  See the Channel9Demo included 
+in the Samples directory, for an example of how to set this dependency property.
 
 •	Styles and Triggers
 Because the Interactive3DDecorator is changing the hidden content based on what 2D on 3D 

@@ -114,6 +114,11 @@ namespace _3DTools
                 {
                     if (viewport3D.Camera != null)
                     {
+                        if (viewport3D.Camera.IsFrozen)
+                        {
+                            viewport3D.Camera = viewport3D.Camera.Clone();
+                        }
+
                         if (viewport3D.Camera.Transform != _transform)
                         {
                             viewport3D.Camera.Transform = _transform;

@@ -9,15 +9,7 @@
    project.  For more information, see:
    
    http://CodePlex.com/Wiki/View.aspx?ProjectName=3DTools
-  
-  NOTE: 
-  Inking is possible with the 2D on 3D code, but it requires a small modification to 
-  Interactive3DDecorator.cs to enable this behavior.  Simply uncomment the commented 
-  out “InvalidateArrange” call in OnPreviewMouseMove and inking will fully work.  Because 
-  the InvalidateArrange could potentially be computationally costly, it is commented out 
-  by default, but should you need inking support in your application, the above step will enable it 
-  by taking the previously described action.
-  
+    
 -->
 
 <Window x:Class="Channel9Demo.DemoWindow"
@@ -132,32 +124,35 @@
   </Grid> 
   -->
 
-  <local:TrackballDecorator>
-    <local:Interactive3DDecorator Debug="True">
-      <Viewport3D Width="800" Height="500">
-        <Viewport3D.Camera>
-          <PerspectiveCamera Position="0, 0, 6"/>
-        </Viewport3D.Camera>
+  <StackPanel>
+    <CheckBox x:Name="truthCheckbox">Truth</CheckBox>
+    <local:TrackballDecorator>
+      <local:Interactive3DDecorator Debug="{Binding ElementName=truthCheckbox, Path=IsChecked}" 
+                                    ContainsInk="True">
+        <Viewport3D Width="800" Height="500">
+          <Viewport3D.Camera>
+            <PerspectiveCamera Position="0, 0, 6"/>
+          </Viewport3D.Camera>
 
 
-        <local:InteractiveVisual3D Transform="{StaticResource Transform1}" 
-                                   Geometry="{StaticResource PlaneMesh}"
-                                   Visual="{StaticResource Visual1}" />
+          <local:InteractiveVisual3D Transform="{StaticResource Transform1}" 
+                                     Geometry="{StaticResource PlaneMesh}"
+                                     Visual="{StaticResource Visual1}" />
 
-        <local:InteractiveVisual3D Transform="{StaticResource Transform2}" 
-                                   Geometry="{StaticResource PlaneMesh}"
-                                   Visual="{StaticResource Visual2}" />
+          <local:InteractiveVisual3D Transform="{StaticResource Transform2}" 
+                                     Geometry="{StaticResource PlaneMesh}"
+                                     Visual="{StaticResource Visual2}" />
 
 
-        <ModelVisual3D>
-          <ModelVisual3D.Content>
-            <DirectionalLight Color="#FFFFFFFF" Direction="0,0,-1"/>
-          </ModelVisual3D.Content>
-        </ModelVisual3D>
-      </Viewport3D>
-    </local:Interactive3DDecorator>
-  </local:TrackballDecorator>
-
+          <ModelVisual3D>
+            <ModelVisual3D.Content>
+              <DirectionalLight Color="#FFFFFFFF" Direction="0,0,-1"/>
+            </ModelVisual3D.Content>
+          </ModelVisual3D>
+        </Viewport3D>
+      </local:Interactive3DDecorator>
+    </local:TrackballDecorator>
+  </StackPanel>
 </Window>
 
 

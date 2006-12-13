@@ -187,8 +187,13 @@ namespace _3DTools
 
                         _isInPosition = true;
 
-                        // NOTE: If you want inking support to work, you need to uncomment the line below.                        
-                        // InvalidateArrange();
+                        // we need to make this InvalidateArrange call so that inking works.
+                        // This is potentially a time consuming call, so by default it does not
+                        // happen unless ContainsInk is set to be true.
+                        if (ContainsInk)
+                        {
+                            InvalidateArrange();
+                        }
 
                         // resynch the mouse since we just moved things around
                         Mouse.Synchronize();
@@ -729,6 +734,24 @@ namespace _3DTools
                     iv3D._DEBUGadorner = null;
                 }
             }
+        }
+
+        /// <summary>
+        /// The following DP indicates whether any of the 3D objects within the
+        /// Viewport3D will have 2D visuals with ink on them - special processing
+        /// is required in this case.
+        /// </summary>
+        public static readonly DependencyProperty ContainsInkProperty =
+            DependencyProperty.Register(
+                "ContainsInk",
+                typeof(bool),
+                typeof(Interactive3DDecorator),
+                new PropertyMetadata(false));
+
+        public bool ContainsInk
+        {
+            get { return (bool)GetValue(ContainsInkProperty); }
+            set { SetValue(ContainsInkProperty, value); }
         }
 
         /// <summary>
