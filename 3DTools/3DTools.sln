@@ -14,9 +14,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InteractiveViewport3DSample
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Channel9Demo", "Samples\Channel9Demo\Channel9Demo.csproj", "{0414411F-1AFE-4506-AD9F-6917E4032581}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneratedTextureCoordinatesDemo", "Samples\GeneratedTextureCoordinatesDemo\GeneratedTextureCoordinatesDemo.csproj", "{076F8821-DB8A-4D8A-9015-A8E5D68C82E4}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 5
+		SccNumberOfProjects = 6
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs01.codeplex.com/
 		SccLocalPath0 = .
@@ -35,6 +37,10 @@ Global
 		SccProjectTopLevelParentUniqueName4 = 3DTools.sln
 		SccProjectName4 = Samples/Channel9Demo
 		SccLocalPath4 = Samples\\Channel9Demo
+		SccProjectUniqueName5 = Samples\\GeneratedTextureCoordinatesDemo\\GeneratedTextureCoordinatesDemo.csproj
+		SccProjectTopLevelParentUniqueName5 = 3DTools.sln
+		SccProjectName5 = Samples/GeneratedTextureCoordinatesDemo
+		SccLocalPath5 = Samples\\GeneratedTextureCoordinatesDemo
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +63,10 @@ Global
 		{0414411F-1AFE-4506-AD9F-6917E4032581}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0414411F-1AFE-4506-AD9F-6917E4032581}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0414411F-1AFE-4506-AD9F-6917E4032581}.Release|Any CPU.Build.0 = Release|Any CPU
+		{076F8821-DB8A-4D8A-9015-A8E5D68C82E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{076F8821-DB8A-4D8A-9015-A8E5D68C82E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{076F8821-DB8A-4D8A-9015-A8E5D68C82E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{076F8821-DB8A-4D8A-9015-A8E5D68C82E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,5 +75,6 @@ Global
 		{0231FAF0-6A94-4211-8C62-82043BD747AD} = {E41EA7FE-C162-4C20-859B-1872DB999D4F}
 		{6E88F38A-029E-4BDE-8CFB-AD4898826FDF} = {E41EA7FE-C162-4C20-859B-1872DB999D4F}
 		{0414411F-1AFE-4506-AD9F-6917E4032581} = {E41EA7FE-C162-4C20-859B-1872DB999D4F}
+		{076F8821-DB8A-4D8A-9015-A8E5D68C82E4} = {E41EA7FE-C162-4C20-859B-1872DB999D4F}
 	EndGlobalSection
 EndGlobal
