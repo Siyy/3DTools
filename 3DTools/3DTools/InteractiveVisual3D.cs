@@ -88,10 +88,7 @@ namespace _3DTools
         /// </summary>
         public InteractiveVisual3D()
         {
-            _visualBrush = new VisualBrush();
-            RenderOptions.SetCachingHint(_visualBrush, CachingHint.Cache);
-            _visualBrush.ViewportUnits = BrushMappingMode.Absolute;
-            _visualBrush.TileMode = TileMode.None;
+            InternalVisualBrush = CreateVisualBrush();
 
             // create holders for the intersection plane and content
             _content = new GeometryModel3D();
@@ -915,16 +912,39 @@ namespace _3DTools
         /// </summary>
         private void GenerateMaterial()
         {
-            Material material; 
+            Material material;
 
-            material = Material.Clone();
-            SwapInVisualBrush(material);                              
+            // begin order dependent operations            
+            InternalVisualBrush.Visual = null;
+            InternalVisualBrush = CreateVisualBrush();
             
+            material = Material.Clone();
             _content.Material = material;
+
+            InternalVisualBrush.Visual = InternalVisual;
+
+            SwapInVisualBrush(material);
+            // end order dependent operations
+            
             if (IsBackVisible)
             {
                 _content.BackMaterial = material;
             }
+        }
+
+        /// <summary>
+        /// Creates the VisualBrush that will be used to hold the interactive
+        /// 2D content.
+        /// </summary>
+        /// <returns>The VisualBrush to hold the interactive 2D content</returns>
+        private VisualBrush CreateVisualBrush()
+        {
+            VisualBrush vb = new VisualBrush();
+            RenderOptions.SetCachingHint(vb, CachingHint.Cache);
+            vb.ViewportUnits = BrushMappingMode.Absolute;
+            vb.TileMode = TileMode.None;
+
+            return vb;
         }
 
         /// <summary>
@@ -1022,29 +1042,37 @@ namespace _3DTools
         /// </summary>
         private VisualBrush InternalVisualBrush
         {
-            get { return _visualBrush; }
+            get 
+            { 
+                return _visualBrush; 
+            }
+
+            set
+            {
+                _visualBrush = value;
+            }
         }
 
         internal static void OnVisualChanged(Object sender, DependencyPropertyChangedEventArgs e)
         {
             InteractiveVisual3D imv3D = ((InteractiveVisual3D)sender);
-
+            AdornerDecorator ad = null;
             if (imv3D.InternalVisual != null)
             {
-                if (((AdornerDecorator)imv3D.InternalVisual).Child is VisualDecorator)
+                ad = ((AdornerDecorator)imv3D.InternalVisual);
+                if (ad.Child is VisualDecorator)
                 {
-                    VisualDecorator oldVisualDecorator = (VisualDecorator)((AdornerDecorator)imv3D.InternalVisual).Child;
+                    VisualDecorator oldVisualDecorator = (VisualDecorator)ad.Child;
                     oldVisualDecorator.Content = null;
                 }
-
-                ((AdornerDecorator)imv3D.InternalVisual).Child = null;
             }
-
             // so that the patterns on visuals caused by tabbing, etc... work, 
             // we put an adorner layer here so that anything adorned gets adorned 
             // within the visual and not at the adorner layer on the window
-            AdornerDecorator ad = new AdornerDecorator();
-
+            if (ad == null)
+            {
+                ad = new AdornerDecorator();
+            }
             UIElement adornerDecoratorChild;
             if (imv3D.Visual is UIElement)
             {
@@ -1056,11 +1084,12 @@ namespace _3DTools
                 visDecorator.Content = imv3D.Visual;
                 adornerDecoratorChild = visDecorator;
             }
-
+            ad.Child = null;
             ad.Child = adornerDecoratorChild;
             imv3D._internalVisual = ad;
-            imv3D.InternalVisualBrush.Visual = imv3D.InternalVisual;            
+            imv3D.InternalVisualBrush.Visual = imv3D.InternalVisual;
         }
+
 
         /// <summary>
         /// The BackFaceVisibleProperty specifies whether or not the back face of the 3D object
