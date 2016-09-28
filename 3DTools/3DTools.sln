@@ -1,9 +1,11 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3DTools", "3DTools\3DTools.csproj", "{5F603892-DE40-4246-A969-1C6717AFE35D}"
-EndProject
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{E41EA7FE-C162-4C20-859B-1872DB999D4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3DTools", "3DTools\3DTools.csproj", "{5F603892-DE40-4246-A969-1C6717AFE35D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelViewer", "Samples\ModelViewer\ModelViewer.csproj", "{0231FAF0-6A94-4211-8C62-82043BD747AD}"
 EndProject
@@ -17,31 +19,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneratedTextureCoordinatesDemo", "Samples\GeneratedTextureCoordinatesDemo\GeneratedTextureCoordinatesDemo.csproj", "{076F8821-DB8A-4D8A-9015-A8E5D68C82E4}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 6
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs01.codeplex.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = 3DTools\\3DTools.csproj
-		SccProjectName1 = 3DTools
-		SccLocalPath1 = 3DTools
-		SccProjectUniqueName2 = Samples\\ModelViewer\\ModelViewer.csproj
-		SccProjectTopLevelParentUniqueName2 = 3DTools.sln
-		SccProjectName2 = Samples/ModelViewer
-		SccLocalPath2 = Samples\\ModelViewer
-		SccProjectUniqueName3 = Samples\\InteractiveViewport3DSample\\InteractiveViewport3DSample.csproj
-		SccProjectTopLevelParentUniqueName3 = 3DTools.sln
-		SccProjectName3 = Samples/InteractiveViewport3DSample
-		SccLocalPath3 = Samples\\InteractiveViewport3DSample
-		SccProjectUniqueName4 = Samples\\Channel9Demo\\Channel9Demo.csproj
-		SccProjectTopLevelParentUniqueName4 = 3DTools.sln
-		SccProjectName4 = Samples/Channel9Demo
-		SccLocalPath4 = Samples\\Channel9Demo
-		SccProjectUniqueName5 = Samples\\GeneratedTextureCoordinatesDemo\\GeneratedTextureCoordinatesDemo.csproj
-		SccProjectTopLevelParentUniqueName5 = 3DTools.sln
-		SccProjectName5 = Samples/GeneratedTextureCoordinatesDemo
-		SccLocalPath5 = Samples\\GeneratedTextureCoordinatesDemo
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
