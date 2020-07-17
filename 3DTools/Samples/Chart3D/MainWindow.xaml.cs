@@ -35,10 +35,10 @@ namespace Jiuyong
 				{
 					Positions = new Point3DCollection(
 					new[] {
-						new Point3D(-1, -1, 0),
-						new Point3D(1, -1, 0),
-						new Point3D(-1, 1, 0),
-						new Point3D(1, 1, 0),
+						new Point3D(-1, -1, 1),
+						new Point3D(1, -1, 1),
+						new Point3D(-1, -1, -1),
+						new Point3D(1, -1, -1),
 					}),
 					TriangleIndices = new Int32Collection(new[] {
 						0, 1, 2, 1, 3, 2
