@@ -13,6 +13,6 @@
 
 协作地址：  
 https://github.com/Siyy/3DTools  
-https://git.oschina.net/Siyy/Wpf3DTools  
+https://gitee.com/Siyy/Wpf3DTools  
 
 
