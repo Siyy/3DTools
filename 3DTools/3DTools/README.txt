@@ -1,4 +1,4 @@
-This README gives a brief overview of the major classes used to enable 
+ÔªøThis README gives a brief overview of the major classes used to enable 
 interactive 2D on 3D, a high level overview of how it works, 
 as well as a list of known issues and changes that can be made to get 
 around them.
@@ -35,7 +35,7 @@ In XAML, the Interactive3DDecorator is used as follows:
 
 <local:Interactive3DDecorator>
 	<Viewport3D>
-		Ö
+		‚Ä¶
 	</Viewport3D>
 </local:Interactive3DDecorator>
 
@@ -46,14 +46,14 @@ and also to signal to the Interactive3DDecorator that this Visual3D is intended 
 be interacted with.  InteractiveVisual3D is a subclass of ModelVisual3D and provides 
 the following dependency properties:
 
-ï	Geometry      - The Geometry3D that is to become the content of the InteractiveVisual3D.
-ï	Visual        ñ The Visual that is to be used in a VisualBrush, which will then 
+‚Ä¢	Geometry      - The Geometry3D that is to become the content of the InteractiveVisual3D.
+‚Ä¢	Visual        ‚Äì The Visual that is to be used in a VisualBrush, which will then 
 					be used in a material for the geometry for the InteractiveVisual3D.
-ï	Material      ñ A user specified material, with the IsInteractiveMaterial attached 
+‚Ä¢	Material      ‚Äì A user specified material, with the IsInteractiveMaterial attached 
 					property being used to mark the locations where the user wants the 
 					VisualBrush used to represent the Visual, to be placed.  By default, 
 					a DiffuseMaterial is used.
-ï	IsBackVisible ñ Indicates whether the material used for the front face should also be 
+‚Ä¢	IsBackVisible ‚Äì Indicates whether the material used for the front face should also be 
 					mirrored on the back face.
 
 The first two properties, Geometry and Visual, are the primary ones needed.  They allow 
@@ -62,12 +62,12 @@ geometry.  Note: the texture coordinates used for the Geometry must be in the ra
 (0,0) to (1,1) to enable interaction with the Visual.  If they are outside this range, the
 user will be interacting outside of the bounds of the Visual. 
 
-The others allow for fine tuning of the objectís appearance.  The Material property allows 
+The others allow for fine tuning of the object‚Äôs appearance.  The Material property allows 
 a user to create their own material for the object.  Because there potentially need to be 
 things added above the Visual specified by the user, and because parameters of the 
 VisualBrush are modified, the user does not directly specify the VisualBrush used.  Instead, 
 they specify using the IsInteractiveMaterial attached property, which material they wish to 
-make ìinteractiveî (i.e. set the VisualBrush created using the passed in Visual as the 
+make ‚Äúinteractive‚Äù (i.e. set the VisualBrush created using the passed in Visual as the 
 Brush for that material).  As an example, the following code sets the material to be composed 
 of a DiffuseMaterial, which will contain the visual brush, and a SpecularMaterial.
 
@@ -100,15 +100,15 @@ How does it work:
 At a very high level, the interaction with 2D on 3D is achieved by really interacting 
 with a hidden version of that 2D content in 2D.  The 2D is positioned such that the 
 point in 3D the mouse is over is the exact same point as the mouse is over on the 
-hidden 2D version.  Then, when the user clicks, etcÖ they are interacting with exactly 
-the same location.  If you want to see this for yourself, you can set the ìDebugî 
+hidden 2D version.  Then, when the user clicks, etc‚Ä¶ they are interacting with exactly 
+the same location.  If you want to see this for yourself, you can set the ‚ÄúDebug‚Äù 
 property on Interactive3DDecorator to true, which makes the hidden layer partially visible.
 
 The Interactive3DDecorator then consists of two elements: the 3D content that is displayed 
 within it and a hidden layer that is used to position and display the 2D content that is 
 being interacted with.  Depending on what 2D content on 3D is being interacted with, the 
 hidden layer changes to hold that 2D content.  For example, consider a simple case of a
-button, with text "Button", placed on a sphere.  When the mouse moves over the ìBî in 
+button, with text "Button", placed on a sphere.  When the mouse moves over the ‚ÄúB‚Äù in 
 the button on the sphere, the hidden layer (the button) is moved such that the mouse is 
 over the same point in the hidden layer as it is in the 3D scene.   
   
@@ -118,19 +118,19 @@ If it hit an object, and it is an InteractiveVisual3D, we can use the return par
 from the intersection to compute the texture coordinate that was hit.  Then from these, 
 we can map from the (u,v) value of the texture coordinate, on to an x,y point on the 2D 
 visual, which is the point we need to place under the mouse.  More specifically, the code 
-assumes texture coordinates are all in the range (0,0) to (1,1) ñ i.e. upper left to lower 
+assumes texture coordinates are all in the range (0,0) to (1,1) ‚Äì i.e. upper left to lower 
 right of the image (this is important to know, since your texture coordinates need to 
 be within this range to enable interaction with the 2D content).  Then the point on the 
 2D object that was hit is simply (u * Width, v * Height). 
 
-Thereís one very interesting ìgotchaî though: what happens when one of the 2D objects grabs 
+There‚Äôs one very interesting ‚Äúgotcha‚Äù though: what happens when one of the 2D objects grabs 
 capture and then you move off the 3D mesh it is on?  For example, you select some text, and 
 then move the mouse above that selected text, or click and hold on a button, and then move 
 away from it.  Correct hidden content positioning becomes more complicated in this case.  
 The problem becomes difficult for many reasons.  In the normal 2D situation, both the mouse 
 position and the 2D content exist in the same plane.  The transformation that is applied to 
-the 2D content can be used to transform the mouse position to the contentís local coordinate 
-system.  However in 3D, due to the projection of 3D on to a 2D plane, the mouseís position 
+the 2D content can be used to transform the mouse position to the content‚Äôs local coordinate 
+system.  However in 3D, due to the projection of 3D on to a 2D plane, the mouse‚Äôs position 
 actually corresponds to a line in 3D space.  In addition, the element with capture could also 
 be mapped to any arbitrary geometry.  When the mouse is over the 3D object, hit testing tells 
 us where it is relative to the 2D visual.  When it is off the 3D object, due to the above 
@@ -142,21 +142,21 @@ it is in the proper position relative to the object that has capture.
 
 To solve this issue, the code takes the following approach:  The overall idea is to reduce 
 the 3D problem back to 2D.  In the normal 2D case, the transformations applied to the 
-content can be used to convert the mouse position to the contentís local coordinate 
+content can be used to convert the mouse position to the content‚Äôs local coordinate 
 system.  This transformed position then lets the content know where the mouse is relative 
 to it.  In 3D, due to the many orientations of the geometry and texture coordinate layouts, 
-itís difficult to say where a 3D point is in the relative coordinate system of the 2D 
+it‚Äôs difficult to say where a 3D point is in the relative coordinate system of the 2D 
 content on 3D.  To approximate this, the outline of the 2D content on 3D, after it has 
 been projected to screen space, is computed, and then the mouse is positioned based on 
 this projection. 
     
 After the outline is available, The closest point on this outline to the mouse position 
-is computed, and then this point on the outline is considered what was ìhitî and it is 
+is computed, and then this point on the outline is considered what was ‚Äúhit‚Äù and it is 
 placed under the moue position.  Since we place the mouse by the closest edge point, 
 the interaction tends to behave as it would in 2D, since we position the hidden content 
 based on what the mouse is closest to on the 2D content on 3D.  By placing it at the 
 closest edge point, we are explicitly stating about where we expect the mouse to be 
-relative to the 2D on 3D elementís orientation.
+relative to the 2D on 3D element‚Äôs orientation.
 
 This method helps provide an intuitive response to the interaction, since the interaction 
 happens with the closest point on the object with capture to the mouse.
@@ -164,14 +164,14 @@ happens with the closest point on the object with capture to the mouse.
 -------------
 Known Issues:
 -------------
-ï	Inking support:  
+‚Ä¢	Inking support:  
 Inking is possible with the 2D on 3D code, but it requires you to set the ContainsInk 
 dependency property on Interactive3DDecorator to true.  This then causes an InvalidateArrange
 to occur whenever the mouse is moved. Because the InvalidateArrange could potentially be 
 computationally costly, this property is set to false by default.  See the Channel9Demo included 
 in the Samples directory, for an example of how to set this dependency property.
 
-ï	Styles and Triggers
+‚Ä¢	Styles and Triggers
 Because the Interactive3DDecorator is changing the hidden content based on what 2D on 3D 
 object the mouse is over, certain styling issues can appear.  This is due to the fact that 
 the 2D Visuals that appears on the 3D objects are being added and removed from the Visual 

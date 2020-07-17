@@ -1,4 +1,4 @@
-//---------------------------------------------------------------------------
+﻿//---------------------------------------------------------------------------
 //
 // (c) Copyright Microsoft Corporation.
 // This source is subject to the Microsoft Limited Permissive License.
