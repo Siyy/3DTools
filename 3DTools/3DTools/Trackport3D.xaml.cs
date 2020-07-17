@@ -84,7 +84,7 @@ namespace _3DTools
             }
         }
 
-        private void SetupScene()
+		private void SetupScene()
         {
             switch (ViewMode)
             {
@@ -110,5 +110,16 @@ namespace _3DTools
 
         private ViewMode _viewMode;
         private Model3D _model;
-    }
+
+        public Model3D Model
+		{
+			get => _model;
+			set
+			{
+				_model = value;
+                SetupScene();
+			}
+		}
+
+	}
 }
