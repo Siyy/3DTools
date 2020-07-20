@@ -29,20 +29,26 @@ namespace Jiuyong
 
 		private void MainWindow_Loaded(object sender, RoutedEventArgs e)
 		{
+			var d = new ChartData(100, 100, (x, y) => x * x + y * y);
+			var ps = d.GetPositions().ToArray();
+			var ts = d.GetTriangleIndices().ToArray();
+
 			T3D.Model = new GeometryModel3D
 			{
 				Geometry = new MeshGeometry3D
 				{
-					Positions = new Point3DCollection(
-					new[] {
-						new Point3D(-1, -1, 1),
-						new Point3D(1, -1, 1),
-						new Point3D(-1, -1, -1),
-						new Point3D(1, -1, -1),
-					}),
-					TriangleIndices = new Int32Collection(new[] {
-						0, 1, 2, 1, 3, 2
-					}),
+					//Positions = new Point3DCollection(
+					//new[] {
+					//	new Point3D(-1, -1, 1),
+					//	new Point3D(1, -1, 1),
+					//	new Point3D(-1, -1, -1),
+					//	new Point3D(1, -1, -1),
+					//}),
+					//TriangleIndices = new Int32Collection(new[] {
+					//	0, 1, 2, 1, 3, 2
+					//}),
+					Positions = new Point3DCollection(ps),
+					TriangleIndices = new Int32Collection(ts),
 				},
 				Material = new DiffuseMaterial
 				{
