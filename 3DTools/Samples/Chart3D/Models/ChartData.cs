@@ -48,14 +48,14 @@ namespace Jiuyong
 			Width = width;
 			Height = height;
 
-			Zs = new double[Width , Height];
+			Zs = new double[Width, Height];
 			//Zs = new double[Width * Height];
 
 			for (int i = 0; i < width; i++)
 			{
 				for (int j = 0; j < height; j++)
 				{
-					Zs[i , j] = f(i, j);
+					Zs[i, j] = f(i, j);
 					//Zs[i * width + j] = f(i, j);
 				}
 			}
@@ -67,22 +67,25 @@ namespace Jiuyong
 	using System.Windows.Media.Media3D;
 	public partial class ChartData
 	{
+		public int Wp = 0;
+		public int Hp = 0;
+
 		public IEnumerable<Point3D> GetPositions()
 		{
 			for (int i = 0; i < Width; i++)
 			{
 				for (int j = 0; j < Height; j++)
 				{
-					yield return new Point3D(i, j, Zs[i, j]);
+					yield return new Point3D(i + Wp, j + Hp, Zs[i, j]);
 				}
 			}
 		}
 
 		public IEnumerable<int> GetTriangleIndices()
 		{
-			for (int i = 0; i < Width-1; i++)
+			for (int i = 0; i < Width - 1; i++)
 			{
-				for (int j = 0; j < Height-1; j++)
+				for (int j = 0; j < Height - 1; j++)
 				{
 					var x0 = i * Width + j;
 

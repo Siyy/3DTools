@@ -29,7 +29,10 @@ namespace Jiuyong
 
 		private void MainWindow_Loaded(object sender, RoutedEventArgs e)
 		{
-			var d = new ChartData(100, 100, (x, y) => x * x + y * y);
+			var d = new ChartData(100, 100,(x, y) => 
+				(Math.Pow(x-50,2d) + Math.Pow(y-50,2d))/100d
+				);
+			d.Wp = -50;d.Hp = -50;
 			var ps = d.GetPositions().ToArray();
 			var ts = d.GetTriangleIndices().ToArray();
 
