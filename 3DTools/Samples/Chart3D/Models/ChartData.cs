@@ -65,10 +65,21 @@ namespace Jiuyong
 namespace Jiuyong
 {
 	using System.Windows.Media.Media3D;
+
+	/// <summary>
+	/// 方便的构造的虚拟的模型。
+	/// </summary>
 	public partial class ChartData
 	{
-		public int Wp = 0;
-		public int Hp = 0;
+		/// <summary>
+		/// 横向偏移。
+		/// </summary>
+		public double Wp { get; set; } = 0;
+
+		/// <summary>
+		/// 纵向偏移。
+		/// </summary>
+		public double Hp { get; set; } = 0;
 
 		public IEnumerable<Point3D> GetPositions()
 		{

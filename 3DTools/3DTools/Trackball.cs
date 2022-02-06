@@ -1,4 +1,4 @@
-//---------------------------------------------------------------------------
+﻿//---------------------------------------------------------------------------
 //
 // (c) Copyright Microsoft Corporation.
 // This source is subject to the Microsoft Limited Permissive License.
@@ -71,11 +71,13 @@ namespace _3DTools
         private Transform3DGroup _transform;
         private ScaleTransform3D _scale = new ScaleTransform3D();
         private AxisAngleRotation3D _rotation = new AxisAngleRotation3D();
+        private TranslateTransform3D _translate = new TranslateTransform3D();
 
         public Trackball()
         {
             _transform = new Transform3DGroup();
             _transform.Children.Add(_scale);
+            _transform.Children.Add(_translate);
             _transform.Children.Add(new RotateTransform3D(_rotation));
         }
 
@@ -104,6 +106,7 @@ namespace _3DTools
                     _eventSource.MouseDown -= this.OnMouseDown;
                     _eventSource.MouseUp -= this.OnMouseUp;
                     _eventSource.MouseMove -= this.OnMouseMove;
+                    _eventSource.MouseWheel -= this.OnMouseWheel;
                 }
 
                 _eventSource = value;
@@ -111,10 +114,18 @@ namespace _3DTools
                 _eventSource.MouseDown += this.OnMouseDown;
                 _eventSource.MouseUp += this.OnMouseUp;
                 _eventSource.MouseMove += this.OnMouseMove;
+                _eventSource.MouseWheel += this.OnMouseWheel;
             }
         }
 
-        private void OnMouseDown(object sender, MouseEventArgs e)
+		private void OnMouseWheel(object sender, MouseWheelEventArgs e)
+		{
+			var w = e.Delta / 120d;
+			Zoom(1 - w / 10);
+			//throw new NotImplementedException();
+		}
+
+		private void OnMouseDown(object sender, MouseEventArgs e)
         {
             Mouse.Capture(EventSource, CaptureMode.Element);
             _previousPosition2D = e.GetPosition(EventSource);
@@ -140,7 +151,8 @@ namespace _3DTools
             }
             else if (e.RightButton == MouseButtonState.Pressed)
             {
-                Zoom(currentPosition);
+                //Zoom(currentPosition);
+                Move(currentPosition);
             }
 
             _previousPosition2D = currentPosition;
@@ -186,14 +198,31 @@ namespace _3DTools
         }
 
         private void Zoom(Point currentPosition)
-        {
-            double yDelta = currentPosition.Y - _previousPosition2D.Y;
-            
-            double scale = Math.Exp(yDelta / 100);    // e^(yDelta/100) is fairly arbitrary.
+		{
+			double yDelta = currentPosition.Y - _previousPosition2D.Y;
+			double scale = Math.Exp(yDelta / 100);    // e^(yDelta/100) is fairly arbitrary.
+			Zoom(scale);
+		}
 
-            _scale.ScaleX *= scale;
-            _scale.ScaleY *= scale;
-            _scale.ScaleZ *= scale;
-        }
-    }
+		private void Zoom(double scale)
+		{
+			_scale.ScaleX *= scale;
+			_scale.ScaleY *= scale;
+			_scale.ScaleZ *= scale;
+		}
+
+		private void Move(Point currentPosition)
+		{
+			double x = currentPosition.X - _previousPosition2D.X;
+			double y = currentPosition.Y - _previousPosition2D.Y;
+			Move(x, y);
+		}
+
+		private void Move(double x, double y)
+		{
+			_translate.OffsetX -= x / 10; //反正就是相反。这是 2D 和 3D 坐标轴方向导致。
+			_translate.OffsetY += y / 10;
+		}
+
+	}
 }
